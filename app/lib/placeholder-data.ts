@@ -46,6 +46,12 @@ const customers = [
     email: 'balazs@orban.com',
     image_url: '/customers/balazs-orban.png',
   },
+  {
+    id: '10F20235-C59E-4137-O911-Q8C2KY8F7CBB',
+    name: 'Felix',
+    email: 'gato@gmail.com',
+    image_url: '/customers/balazs-orban.png',
+  },
 ];
 
 const invoices  = [
