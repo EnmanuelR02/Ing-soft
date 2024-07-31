@@ -13,6 +13,9 @@
     title: 'R&L FINANCIAL',
   };
   
+// Este componente muestra una lista de facturas con la posibilidad de buscar, crear nuevas facturas,
+// y navegar entre diferentes páginas de facturas.
+
   export default async function Page({
     searchParams,
   }: {
@@ -21,9 +24,13 @@
       page?: string;
     };
   }) {
+
+      // Obtiene el valor de búsqueda de los parámetros o usa una cadena vacía por defecto
     const query = searchParams?.query || '';
+      // Obtiene el número de página actual o usa 1 por defecto
     const currentPage = Number(searchParams?.page) || 1;
 
+      // Obtiene el número total de facturas basado en la consulta de búsqueda, como por cada usuario
     const totalPages = await fetchInvoicesPages(query);
 
     return (
@@ -34,15 +41,18 @@
         </div>
 
         <div className="mt-4 flex items-center justify-between gap-2 md:mt-8">
-          <Search placeholder="Search invoices..." />
+          <Search placeholder="Buscar facturas..." />
           <CreateInvoice />
         </div>
        
+        {/* Suspense para cargar la tabla de facturas con un fallback mientras se obtienen los datos */}
+      {/* La clave de Suspense se basa en la consulta y la página actual para manejar la carga de manera adecuada */}
         <Suspense key={query + currentPage} fallback={<InvoicesTableSkeleton />}>
         <Table query={query} currentPage={currentPage} />
       </Suspense>
         
         <div className="mt-5 flex w-full justify-center">
+     {/* Componente de paginación para navegar entre las páginas de facturas */}
           <Pagination totalPages={totalPages} />
         </div>
       </div>

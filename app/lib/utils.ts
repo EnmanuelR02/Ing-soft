@@ -1,4 +1,5 @@
 import { Revenue } from './definitions';
+// Convierte una cantidad de centavos a formato de moneda en pesos.
 
 export const formatCurrency = (amount: number) => {
   return (amount / 100).toLocaleString('en-US', {
@@ -7,56 +8,55 @@ export const formatCurrency = (amount: number) => {
   });
 };
 
+// Formatea una cadena de fecha a un formato localizado.
 export const formatDateToLocal = (
-  dateStr: string,
-  locale: string = 'en-US',
+  dateStr: string, // Cadena de fecha en formato ISO
+  locale: string = 'en-US', // Configuración regional para el formato de la fecha
 ) => {
-  const date = new Date(dateStr);
+  const date = new Date(dateStr); // Crea un objeto Date a partir de la cadena de fecha
   const options: Intl.DateTimeFormatOptions = {
-    day: 'numeric',
-    month: 'short',
-    year: 'numeric',
+    day: 'numeric', // Día en formato numérico
+    month: 'short', // Mes en formato abreviado (e.g., 'Jun')
+    year: 'numeric', // Año en formato numérico
   };
-  const formatter = new Intl.DateTimeFormat(locale, options);
-  return formatter.format(date);
+  const formatter = new Intl.DateTimeFormat(locale, options); // Crea un formateador de fecha
+  return formatter.format(date); // aqyi devuelve la fecha ya formateada
 };
 
 export const generateYAxis = (revenue: Revenue[]) => {
-  // Calculate what labels we need to display on the y-axis
-  // based on highest record and in 1000s
+ // Genera etiquetas para el eje Y basadas en los ingresos más altos
   const yAxisLabels = [];
-  const highestRecord = Math.max(...revenue.map((month) => month.revenue));
+  const highestRecord = Math.max(...revenue.map((month) => month.revenue)); // Encuentra el ingreso más alto
   const topLabel = Math.ceil(highestRecord / 1000) * 1000;
 
   for (let i = topLabel; i >= 0; i -= 1000) {
-    yAxisLabels.push(`$${i / 1000}K`);
+    yAxisLabels.push(`$${i / 1000}K`); // Añade etiquetas en incrementos de 1000
   }
 
   return { yAxisLabels, topLabel };
 };
 
+// Genera números de página para la paginación, incluyendo el uso de '...'
 export const generatePagination = (currentPage: number, totalPages: number) => {
-  // If the total number of pages is 7 or less,
-  // display all pages without any ellipsis.
+    // Si hay 7 o menos páginas, muestra todas sin puntos suspensivos.
   if (totalPages <= 7) {
     return Array.from({ length: totalPages }, (_, i) => i + 1);
   }
 
-  // If the current page is among the first 3 pages,
-  // show the first 3, an ellipsis, and the last 2 pages.
+   // Si la página actual está entre las primeras 3, muestra las primeras 3,
+  // un punto suspensivo y las últimas 2 páginas.
   if (currentPage <= 3) {
     return [1, 2, 3, '...', totalPages - 1, totalPages];
   }
 
-  // If the current page is among the last 3 pages,
-  // show the first 2, an ellipsis, and the last 3 pages.
+  // Si la página actual está entre las últimas 3, muestra las primeras 2,
+  // un punto suspensivo y las últimas 3 páginas.
   if (currentPage >= totalPages - 2) {
     return [1, 2, '...', totalPages - 2, totalPages - 1, totalPages];
   }
 
-  // If the current page is somewhere in the middle,
-  // show the first page, an ellipsis, the current page and its neighbors,
-  // another ellipsis, and the last page.
+ // Si la página actual está en medio, muestra la primera página, un punto suspensivo,
+  // la página actual y sus vecinas, otro punto suspensivo y la última página.
   return [
     1,
     '...',

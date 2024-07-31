@@ -1,19 +1,20 @@
-
+// Datos de usuarios en el sistema
 const users = [
   {
-    id: '410544b2-4001-4271-9855-fec4b6a6442a',
-    name: 'User',
-    email: '01enmanuelromero@gmail.com',
-    password: '123456',
+    id: '410544b2-4001-4271-9855-fec4b6a6442a', // Identificador único del usuario
+    name: 'User', // Nombre del usuario
+    email: '01enmanuelromero@gmail.com', // Correo electrónico del usuario
+    password: '123456', // Contraseña del usuario (debe manejarse con seguridad)
   },
 ];
 
+// Datos de los clientes
 const customers = [
   {
-    id: 'd6e15727-9fe1-4961-8c5b-ea44a9bd81aa',
-    name: 'Limberth',
-    email: 'evil@rabbit.com',
-    image_url: '/customers/evil-rabbit.png',
+    id: 'd6e15727-9fe1-4961-8c5b-ea44a9bd81aa', // Identificador único del cliente
+    name: 'Limberth', // Nombre del cliente
+    email: 'evil@rabbit.com', // Correo electrónico del cliente
+    image_url: '/customers/evil-rabbit.png', // URL de la imagen del cliente
   },
   {
     id: '3958dc9e-712f-4377-85e9-fec4b6a6442a',
@@ -53,12 +54,13 @@ const customers = [
   },
 ];
 
+// Datos de las facturas
 const invoices  = [
   {
-    customer_id:  customers[0].id,
-    amount:  15795,
-    status:  'pending',
-    date:  '2024-12-06',
+    customer_id: customers[0].id, // ID del cliente asociado a la factura
+    amount: 15795, // Monto de la factura
+    status: 'pending', // Estado de la factura ('pending' o 'paid')
+    date: '2024-12-06', // Fecha de emisión de la factura
   },
   {
     customer_id:  customers[1].id,
@@ -134,9 +136,10 @@ const invoices  = [
   },
 ];
 
+// Datos de ingresos mensuales
 const revenue = [
-  { month: 'Jan', revenue: 2000 },
-  { month: 'Feb', revenue: 1800 },
+  { month: 'Jan', revenue: 2000 }, // Ingresos en enero
+  { month: 'Feb', revenue: 1800 }, // Ingresos en febrero
   { month: 'Mar', revenue: 2200 },
   { month: 'Apr', revenue: 2500 },
   { month: 'May', revenue: 2300 },
