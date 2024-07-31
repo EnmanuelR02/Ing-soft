@@ -7,7 +7,7 @@ import { Metadata } from 'next';
 export const metadata: Metadata = {
   title: {
     template: '%s | R&L FINANCIAL',
-    default: 'Acme Dashboard',
+    default: 'R&L FINANCIAL',
   },
   description: 'R&L FINANCIAL.',
   metadataBase: new URL('https://next-learn-dashboard.vercel.sh'),

@@ -1,16 +1,18 @@
 'use client';
 
-import { CustomerField, InvoiceForm } from '@/app/lib/definitions';
+import { CustomerField, InvoiceForm } from '@/app/lib/definitions'; // Importa las definiciones de tipos para clientes y facturas
 import {
   CheckIcon,
   ClockIcon,
   CurrencyDollarIcon,
   UserCircleIcon,
-} from '@heroicons/react/24/outline';
-import Link from 'next/link';
-import { Button } from '@/app/ui/button';
-import { useFormState } from 'react-dom';
-import { updateInvoice } from '@/app/lib/actions';
+} from '@heroicons/react/24/outline'; // Importa iconos para la interfaz de usuario
+import Link from 'next/link'; // Importa el componente de enlace de Next.js para navegación
+import { Button } from '@/app/ui/button'; // Componente de botón personalizado
+import { useFormState } from 'react-dom'; // Hook para manejar el estado del formulario
+import { updateInvoice } from '@/app/lib/actions'; // Acción para actualizar una factura
+
+// Componente del formulario de edición de factura
 export default function EditInvoiceForm({
   invoice,
   customers,
@@ -18,19 +20,18 @@ export default function EditInvoiceForm({
   invoice: InvoiceForm;
   customers: CustomerField[];
 }) {
-  const initialState = { message: null, errors: {} };
-  const updateInvoiceWithId = updateInvoice.bind(null, invoice.id);
-  const [state, dispatch] = useFormState(updateInvoiceWithId, initialState);
-
+  const initialState = { message: null, errors: {} }; // Estado inicial para manejar mensajes y errores
+  const updateInvoiceWithId = updateInvoice.bind(null, invoice.id); // Vincula la acción de actualización de factura con el ID de la factura actual
+  const [state, dispatch] = useFormState(updateInvoiceWithId, initialState); // Hook para manejar el estado y la lógica del formulario
 
   return (
     <form action={dispatch}>
-      <input type="hidden" name="id" value={invoice.id} />
+      <input type="hidden" name="id" value={invoice.id} /> {/* Campo oculto para el ID de la factura */}
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
-        {/* Nombre cliente */}
+        {/* Campo de selección de cliente */}
         <div className="mb-4">
           <label htmlFor="customer" className="mb-2 block text-sm font-medium">
-          Seleccionar cliente
+            Seleccionar cliente
           </label>
           <div className="relative">
             <select
@@ -40,7 +41,7 @@ export default function EditInvoiceForm({
               defaultValue={invoice.customer_id}
             >
               <option value="" disabled>
-              Seleccionar cliente
+                Seleccionar cliente
               </option>
               {customers.map((customer) => (
                 <option key={customer.id} value={customer.id}>
@@ -52,7 +53,7 @@ export default function EditInvoiceForm({
           </div>
         </div>
 
-        {/*Seleccionar monto */}
+        {/* Campo de entrada para el monto */}
         <div className="mb-4">
           <label htmlFor="amount" className="mb-2 block text-sm font-medium">
             Seleccionar monto
@@ -73,13 +74,14 @@ export default function EditInvoiceForm({
           </div>
         </div>
 
-        {/* Estado de la factura */}
+        {/* Campo de selección del estado de la factura */}
         <fieldset>
           <legend className="mb-2 block text-sm font-medium">
             Estado de la factura
           </legend>
           <div className="rounded-md border border-gray-200 bg-white px-[14px] py-3">
             <div className="flex gap-4">
+              {/* Opción de estado pendiente */}
               <div className="flex items-center">
                 <input
                   id="pending"
@@ -96,6 +98,7 @@ export default function EditInvoiceForm({
                   Pendiente <ClockIcon className="h-4 w-4" />
                 </label>
               </div>
+              {/* Opción de estado pagado */}
               <div className="flex items-center">
                 <input
                   id="paid"
@@ -116,6 +119,7 @@ export default function EditInvoiceForm({
           </div>
         </fieldset>
       </div>
+      {/* Botones de acción para cancelar o editar */}
       <div className="mt-6 flex justify-end gap-4">
         <Link
           href="/dashboard/invoices"

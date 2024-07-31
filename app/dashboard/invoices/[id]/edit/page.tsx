@@ -5,10 +5,12 @@ import { notFound } from 'next/navigation';
  
 
 export default async function Page({ params }: { params: { id: string } }) {
-    const id = params.id;  
+    const id = params.id;  // Obtiene el ID de la factura
+
+      // Realiza llamadas a la API para obtener datos de la factura específica y la lista de clientes
     const [invoice, customers] = await Promise.all([
-        fetchInvoiceById(id),
-        fetchCustomers(),
+        fetchInvoiceById(id), // Obtiene los datos de la factura por ID
+        fetchCustomers(),// Aqui obtiene la lista de clientes
       ]);
       if (!invoice) {
         notFound();
@@ -26,6 +28,7 @@ export default async function Page({ params }: { params: { id: string } }) {
           },
         ]}
       />
+            {/* Formulario de edición de la factura con los datos obtenidos */}
       <Form invoice={invoice} customers={customers} />
     </main>
   );

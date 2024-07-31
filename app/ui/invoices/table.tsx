@@ -1,9 +1,10 @@
 import Image from 'next/image';
-import { UpdateInvoice, DeleteInvoice } from '@/app/ui/invoices/buttons';
-import InvoiceStatus from '@/app/ui/invoices/status';
-import { formatDateToLocal, formatCurrency } from '@/app/lib/utils';
-import { fetchFilteredInvoices } from '@/app/lib/data';
+import { UpdateInvoice, DeleteInvoice } from '@/app/ui/invoices/buttons'; // Botones personalizados para actualizar y eliminar facturas
+import InvoiceStatus from '@/app/ui/invoices/status'; // Componente que muestra el estado de la factura
+import { formatDateToLocal, formatCurrency } from '@/app/lib/utils'; // Utilidades para formatear fecha y moneda
+import { fetchFilteredInvoices } from '@/app/lib/data'; // Función para obtener facturas filtradas
 
+// Componente principal que recibe query y currentPage como props
 export default async function InvoicesTable({
   query,
   currentPage,
@@ -11,12 +12,14 @@ export default async function InvoicesTable({
   query: string;
   currentPage: number;
 }) {
+  // Llama a la función para obtener las facturas filtradas
   const invoices = await fetchFilteredInvoices(query, currentPage);
 
   return (
     <div className="mt-6 flow-root">
       <div className="inline-block min-w-full align-middle">
         <div className="rounded-lg bg-gray-50 p-2 md:pt-0">
+          {/* Sección para dispositivos móviles */}
           <div className="md:hidden">
             {invoices?.map((invoice) => (
               <div
@@ -37,23 +40,25 @@ export default async function InvoicesTable({
                     </div>
                     <p className="text-sm text-gray-500">{invoice.email}</p>
                   </div>
-                  <InvoiceStatus status={invoice.status} />
+                  <InvoiceStatus status={invoice.status} /> {/* Estado de la factura */}
                 </div>
                 <div className="flex w-full items-center justify-between pt-4">
                   <div>
                     <p className="text-xl font-medium">
-                      {formatCurrency(invoice.amount)}
+                      {formatCurrency(invoice.amount)} {/* Formato de la cantidad */}
                     </p>
-                    <p>{formatDateToLocal(invoice.date)}</p>
+                    <p>{formatDateToLocal(invoice.date)} {/* Fecha formateada */}</p>
                   </div>
                   <div className="flex justify-end gap-2">
-                    <UpdateInvoice id={invoice.id} />
-                    <DeleteInvoice id={invoice.id} />
+                    <UpdateInvoice id={invoice.id} /> {/* Botón para actualizar */}
+                    <DeleteInvoice id={invoice.id} /> {/* Botón para eliminar */}
                   </div>
                 </div>
               </div>
             ))}
           </div>
+
+          {/* Sección para pantallas más grandes */}
           <table className="hidden min-w-full text-gray-900 md:table">
             <thead className="rounded-lg text-left text-sm font-normal">
               <tr>

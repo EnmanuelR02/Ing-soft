@@ -1,24 +1,26 @@
 'use client';
 
-import { CustomerField } from '@/app/lib/definitions';
-import Link from 'next/link';
+import { CustomerField } from '@/app/lib/definitions'; // Importa el tipo de campo de cliente
+import Link from 'next/link'; // Importa el componente de enlace para navegación
 import {
   CheckIcon,
   ClockIcon,
   CurrencyDollarIcon,
   UserCircleIcon,
-} from '@heroicons/react/24/outline';
-import { Button } from '@/app/ui/button';
-import { createInvoice } from '@/app/lib/actions';
-import { useFormState } from 'react-dom';
+} from '@heroicons/react/24/outline'; // Iconos para la interfaz de usuario
+import { Button } from '@/app/ui/button'; // Componente de botón personalizado
+import { createInvoice } from '@/app/lib/actions'; // Acción para crear una factura
+import { useFormState } from 'react-dom'; // Hook para manejar el estado del formulario
+
+// Componente del formulario de creación de factura
 export default function Form({ customers }: { customers: CustomerField[] }) {
-  const initialState = { message: null, errors: {} };
-  const [state, dispatch] = useFormState(createInvoice, initialState);
+  const initialState = { message: null, errors: {} }; // Estado inicial para manejar mensajes y errores
+  const [state, dispatch] = useFormState(createInvoice, initialState); // Hook para manejar el estado y la lógica del formulario
 
   return (
     <form action={dispatch}>
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
-        {/* Cliente  */}
+        {/* Campo de selección de cliente */}
         <div className="mb-4">
           <label htmlFor="customer" className="mb-2 block text-sm font-medium">
             Cliente
@@ -43,43 +45,39 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
             <UserCircleIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
           </div>
           <div id="customer-error" aria-live="polite" aria-atomic="true">
-        {state.errors?.customerId &&
-          state.errors.customerId.map((error: string) => (
-            <p className="mt-2 text-sm text-red-500" key={error}>
-              {error}
-            </p>
-          ))}
-      </div>
+            {state.errors?.customerId &&
+              state.errors.customerId.map((error: string) => (
+                <p className="mt-2 text-sm text-red-500" key={error}>
+                  {error}
+                </p>
+              ))}
+          </div>
         </div>
 
-        {/* Monto */}
+        {/* Campo de monto de la factura */}
         <div className="mb-4">
           <label htmlFor="amount" className="mb-2 block text-sm font-medium">
             Monto
           </label>
           <div className="relative mt-2 rounded-md">
-            <div className="relative">
-              <input
-                id="amount"
-                name="amount"
-                type="number"
-                step="0.01"
-                placeholder="Insertar monto"
-                className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
-                
-              />
-              <CurrencyDollarIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
-            </div>
+            <input
+              id="amount"
+              name="amount"
+              type="number"
+              step="0.01"
+              placeholder="Insertar monto"
+              className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+            />
+            <CurrencyDollarIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
           </div>
         </div>
 
-        {/* Factura estado */}
+        {/* Campo de selección de estado de la factura */}
         <fieldset>
-          <legend className="mb-2 block text-sm font-medium">
-            Estado
-          </legend>
+          <legend className="mb-2 block text-sm font-medium">Estado</legend>
           <div className="rounded-md border border-gray-200 bg-white px-[14px] py-3">
             <div className="flex gap-4">
+              {/* Opción de estado pendiente */}
               <div className="flex items-center">
                 <input
                   id="pending"
@@ -95,6 +93,7 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
                   Pendiente <ClockIcon className="h-4 w-4" />
                 </label>
               </div>
+              {/* Opción de estado pagado */}
               <div className="flex items-center">
                 <input
                   id="paid"
@@ -114,6 +113,7 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
           </div>
         </fieldset>
       </div>
+      {/* Botones de acción para cancelar o agregar */}
       <div className="mt-6 flex justify-end gap-4">
         <Link
           href="/dashboard/invoices"
